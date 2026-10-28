@@ -390,7 +390,7 @@ async function loadProducts() {
         : "";
 
       const imageHTML = /^https:\/\/[^"'<>]+$/i.test(image)
-        ? `<img src="${escapeHTML(image)}" alt="${name}" loading="lazy" style="width:100%;height:100%;object-fit:cover">`
+        ? `<img src="${escapeHTML(image)}" alt="${name}" loading="lazy" style="width:100%;height:100%;object-fit:contain">`
         : '<div class="coat"></div>';
 
       const unavailable = Number(product.stock) <= 0;
