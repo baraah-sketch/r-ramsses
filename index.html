@@ -82,23 +82,7 @@ footer{background:#111;color:#eee;padding:35px 6%;display:flex;justify-content:s
 </main>
 <footer><span class="logo">ATELIER / M</span><span>TIMELESS BY DESIGN.</span><span>CONTACT · SHIPPING · RETURNS</span><span>© 2026</span></footer>
 <div id="notice" role="status"></div>
-<script>
-let bagCount = 0;
-const bagItems = [];
 
-function addItem(name) {
-  bagCount++;
-  bagItems.push(name);
-
-  document.getElementById("count").textContent = bagCount;
-
-  const notice = document.getElementById("notice");
-  notice.textContent = name + " added to your bag";
-  notice.style.display = "block";
-
-  setTimeout(() => {
-    notice.style.display = "none";
-  }, 2200);
 <script>
 const SUPABASE_URL = "https://oaqqkzxewgwrspvqlhbn.supabase.co";
 const SUPABASE_KEY = "sb_publishable_vemDmCa3CjndsNQ3d7_ePQ_3uQWOifG";
@@ -147,7 +131,7 @@ function addItem(product) {
   updateBagCount();
 
   const notice = document.getElementById("notice");
-  notice.textContent = `${product.name} added to your bag`;
+  notice.textContent = product.name + " added to your bag";
   notice.style.display = "block";
 
   setTimeout(() => {
@@ -171,7 +155,8 @@ async function loadProducts() {
     );
 
     if (!response.ok) {
-      throw new Error("Could not load products. Check the project key and table permissions.");
+      console.error("Supabase response:", await response.text());
+      throw new Error("Could not load products.");
     }
 
     const products = await response.json();
@@ -195,6 +180,12 @@ async function loadProducts() {
         : '<div class="coat"></div>';
 
       const unavailable = Number(product.stock) <= 0;
+      const colors = Array.isArray(product.colors)
+        ? product.colors.join(", ")
+        : "";
+      const sizes = Array.isArray(product.sizes)
+        ? product.sizes.join(", ")
+        : "";
 
       return `
         <article>
@@ -204,8 +195,8 @@ async function loadProducts() {
             <h3>${name}</h3>
             <div class="price">${money(product.price)}</div>
             <div class="muted">${description}</div>
-            <div class="muted">Colors: ${escapeHTML((product.colors || []).join(", ") || "Ask us")}</div>
-            <div class="muted">Sizes: ${escapeHTML((product.sizes || []).join(", ") || "Ask us")}</div>
+            <div class="muted">Colors: ${escapeHTML(colors || "Ask us")}</div>
+            <div class="muted">Sizes: ${escapeHTML(sizes || "Ask us")}</div>
             <button class="add" type="button"
               data-product-id="${escapeHTML(product.id)}"
               ${unavailable ? "disabled" : ""}>
@@ -225,10 +216,11 @@ async function loadProducts() {
         if (product) addItem(product);
       });
     });
+
   } catch (error) {
+    console.error(error);
     productsContainer.innerHTML =
       '<p class="muted">Unable to load products. Please check the connection settings.</p>';
-    console.error(error);
   }
 }
 
