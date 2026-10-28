@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ATELIER / M — Admin</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 24px 16px;
+      background: #f5f4f1; color: #171717;
+      font-family: Arial, sans-serif;
+    }
+    main { max-width: 680px; margin: auto; }
+    h1 { font-size: 27px; letter-spacing: 2px; }
+    h2 { font-size: 19px; margin-top: 28px; }
+    .panel {
+      background: white; padding: 20px; margin: 18px 0;
+      border: 1px solid #e4e1db; border-radius: 12px;
+    }
+    label { display: block; margin: 14px 0 6px; font-size: 14px; }
+    input, textarea, select, button {
+      width: 100%; padding: 12px; font-size: 16px;
+      border: 1px solid #ccc; border-radius: 7px;
+      background: white; color: #171717;
+    }
+    textarea { min-height: 75px; resize: vertical; }
+    button {
+      margin-top: 14px; background: #171717; color: white;
+      border: 0; cursor: pointer;
+    }
+    button.secondary { background: #e9e7e2; color: #171717; }
+    button.danger { background: #8b2020; }
+    .hint { color: #666; font-size: 13px; line-height: 1.6; }
+    .status { white-space: pre-wrap; line-height: 1.6; }
+    .product {
+      display: flex; gap: 12px; align-items: center;
+      padding: 12px 0; border-bottom: 1px solid #eee;
+    }
+    .product img {
+      width: 76px; height: 90px; object-fit: cover;
+      background: #eee; border-radius: 5px;
+    }
+    .product-info { flex: 1; min-width: 0; }
+    .product-info p { margin: 5px 0; overflow-wrap: anywhere; }
+    .product button { padding: 9px; margin-top: 6px; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>ATELIER / M</h1>
+  <p class="hint">STORE MANAGEMENT · لوحة إدارة المتجر</p>
+
+  <section class="panel" id="loginPanel">
+    <h2>تسجيل الدخول</h2>
+    <label for="email">إيميل المتجر</label>
+    <input id="email" type="email" autocomplete="username"
+           placeholder="إيميل المتجر" required>
+    <label for="password">كلمة المرور</label>
+    <input id="password" type="password"
+           autocomplete="current-password" placeholder="كلمة المرور" required>
+    <button id="loginBtn">تسجيل الدخول</button>
+  </section>
+
+  <section id="adminPanel" hidden>
+    <div class="panel">
+      <p id="welcome"></p>
+      <button class="secondary" id="logoutBtn">تسجيل الخروج</button>
+    </div>
+
+    <form class="panel" id="productForm">
+      <h2>إضافة قطعة جديدة</h2>
+
+      <label for="name">اسم القطعة *</label>
+      <input id="name" required maxlength="120" placeholder="Classic Black Hoodie">
+
+      <label for="category">الفئة *</label>
+      <select id="category" required>
+        <option value="Hoodies">Hoodies — هوديز</option>
+        <option value="T-Shirts">T-Shirts — تيشيرتات</option>
+        <option value="Pants">Pants — بناطيل</option>
+        <option value="Shoes">Shoes — أحذية</option>
+      </select>
+
+      <label for="price">السعر *</label>
+      <input id="price" type="number" min="0.01" step="0.01" required>
+
+      <label for="description">الوصف</label>
+      <textarea id="description" maxlength="1000"
+                placeholder="وصف القطعة والخامة"></textarea>
+
+      <label for="colors">الألوان (افصلي بينها بفاصلة)</label>
+      <input id="colors" placeholder="Black, White, Gray">
+
+      <label for="sizes">المقاسات (افصلي بينها بفاصلة)</label>
+      <input id="sizes" placeholder="S, M, L, XL">
+
+      <label for="stock">الكمية المتوفرة *</label>
+      <input id="stock" type="number" min="0" step="1" value="1" required>
+
+      <label for="photo">صورة القطعة من الاستوديو *</label>
+      <input id="photo" type="file" accept="image/jpeg,image/png,image/webp" required>
+      <p class="hint">اختاري صورة واضحة بصيغة JPG أو PNG أو WebP، بحجم لا يتجاوز 5 ميغابايت.</p>
+
+      <button id="saveBtn" type="submit">رفع الصورة وإضافة المنتج</button>
+      <p id="formStatus" class="status" role="status"></p>
+    </form>
+
+    <section class="panel">
+      <h2>المنتجات الحالية</h2>
+      <button class="secondary" id="refreshBtn">تحديث القائمة</button>
+      <div id="productsList"></div>
+    </section>
+  </section>
+</main>
+
+<script>
+(() => {
+  const SUPABASE_URL = "https://oaqqkzxewgwrspvqlhbn.supabase.co";
+
+  // ضعي هنا مفتاح publishable الخاص بمشروعك، وليس service_role.
+  const SUPABASE_KEY = "sb_publishable_vemDmCa3CjndsNQ3d7_ePQ_3uQWOifG";
+
+  const $ = id => document.getElementById(id);
+  const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  let currentUser = null;
+
+  function status(message) {
+    $("formStatus").textContent = message;
+  }
+
+  function splitValues(value) {
+    return value.split(",").map(v => v.trim()).filter(Boolean);
+  }
+
+  function safeText(value) {
+    return String(value ?? "");
+  }
+
+  async function showSession() {
+    const { data, error } = await client.auth.getSession();
+    if (error) {
+      alert("تعذر التحقق من تسجيل الدخول.");
+      return;
+    }
+
+    currentUser = data.session?.user ?? null;
+    $("loginPanel").hidden = !!currentUser;
+    $("adminPanel").hidden = !currentUser;
+
+    if (currentUser) {
+      $("welcome").textContent = "تم تسجيل الدخول: " + currentUser.email;
+      await loadProducts();
+    }
+  }
+
+  $("loginBtn").addEventListener("click", async () => {
+    const email = $("email").value.trim();
+    const password = $("password").value;
+    if (!email || !password) {
+      alert("أدخلي الإيميل وكلمة المرور.");
+      return;
+    }
+
+    $("loginBtn").disabled = true;
+    $("loginBtn").textContent = "جارٍ تسجيل الدخول…";
+
+    const { error } = await client.auth.signInWithPassword({ email, password });
+
+    $("loginBtn").disabled = false;
+    $("loginBtn").textContent = "تسجيل الدخول";
+
+    if (error) {
+      alert("تعذر تسجيل الدخول. تأكدي من الإيميل وكلمة المرور.");
+      return;
+    }
+
+    $("password").value = "";
+    await showSession();
+  });
+
+  $("logoutBtn").addEventListener("click", async () => {
+    await client.auth.signOut();
+    currentUser = null;
+    $("adminPanel").hidden = true;
+    $("loginPanel").hidden = false;
+  });
+
+  $("productForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    if (!currentUser) {
+      status("سجّلي الدخول أولًا.");
+      return;
+    }
+
+    const file = $("photo").files[0];
+    if (!file) {
+      status("اختاري صورة للقطعة أولًا.");
+      return;
+    }
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+    if (!allowedTypes.includes(file.type) || file.size > 5 * 1024 * 1024) {
+      status("الصورة يجب أن تكون JPG أو PNG أو WebP وبحجم 5 ميغابايت أو أقل.");
+      return;
+    }
+
+    const name = $("name").value.trim();
+    const price = Number($("price").value);
+    const stock = Number($("stock").value);
+
+    if (!name || !Number.isFinite(price) || price <= 0 ||
+        !Number.isInteger(stock) || stock < 0) {
+      status("راجعي الاسم والسعر والكمية.");
+      return;
+    }
+
+    $("saveBtn").disabled = true;
+    status("جارٍ رفع الصورة…");
+
+    let uploadedPath = null;
+
+    try {
+      const extension = file.type === "image/png" ? "png" :
+                        file.type === "image/webp" ? "webp" : "jpg";
+      const path = currentUser.id + "/" + crypto.randomUUID() + "." + extension;
+
+      const { error: uploadError } = await client.storage
+        .from("Products")
+        .upload(path, file, { contentType: file.type, upsert: false });
+
+      if (uploadError) throw uploadError;
+      uploadedPath = path;
+
+      const { data: publicData } = client.storage
+        .from("Products")
+        .getPublicUrl(path);
+
+      const product = {
+        name,
+        description: $("description").value.trim(),
+        category: $("category").value,
+        price,
+        image_url: publicData.publicUrl,
+        colors: splitValues($("colors").value),
+        sizes: splitValues($("sizes").value),
+        stock,
+        active: true
+      };
+
+      const { error: insertError } = await client
+        .from("products")
+        .insert(product);
+
+      if (insertError) throw insertError;
+
+      status("تمت إضافة المنتج بنجاح ❤️");
+      $("productForm").reset();
+      $("stock").value = "1";
+      await loadProducts();
+    } catch (error) {
+      if (uploadedPath) {
+        await client.storage.from("Products").remove([uploadedPath]);
+      }
+      status("لم تتم إضافة المنتج.\n" + (error.message || "تحققي من إعدادات الصلاحيات."));
+    } finally {
+      $("saveBtn").disabled = false;
+    }
+  });
+
+  async function loadProducts() {
+    if (!currentUser) return;
+
+    $("productsList").textContent = "جارٍ تحميل المنتجات…";
+
+    const { data, error } = await client
+      .from("products")
+      .select("id,name,price,image_url,active")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      $("productsList").textContent = "تعذر تحميل المنتجات: " + error.message;
+      return;
+    }
+
+    $("productsList").replaceChildren();
+
+    if (!data.length) {
+      $("productsList").textContent = "لا توجد منتجات ظاهرة حاليًا.";
+      return;
+    }
+
+    data.forEach(product => {
+      const row = document.createElement("div");
+      row.className = "product";
+
+      if (product.image_url) {
+        const img = document.createElement("img");
+        img.src = product.image_url;
+        img.alt = product.name;
+        row.appendChild(img);
+      }
+
+      const info = document.createElement("div");
+      info.className = "product-info";
+
+      const title = document.createElement("strong");
+      title.textContent = safeText(product.name);
+      info.appendChild(title);
+
+      const price = document.createElement("p");
+      price.textContent = safeText(product.price);
+      info.appendChild(price);
+
+      const remove = document.createElement("button");
+      remove.className = "danger";
+      remove.textContent = "حذف المنتج";
+      remove.addEventListener("click", async () => {
+        if (!confirm("هل أنتِ متأكدة من حذف هذا المنتج؟")) return;
+
+        remove.disabled = true;
+        const { error: deleteError } = await client
+          .from("products")
+          .delete()
+          .eq("id", product.id);
+
+        if (deleteError) {
+          alert("تعذر الحذف: " + deleteError.message);
+          remove.disabled = false;
+          return;
+        }
+
+        await loadProducts();
+      });
+
+      info.appendChild(remove);
+      row.appendChild(info);
+      $("productsList").appendChild(row);
+    });
+  }
+
+  $("refreshBtn").addEventListener("click", loadProducts);
+  showSession();
+})();
+</script>
+</body>
+</html>
