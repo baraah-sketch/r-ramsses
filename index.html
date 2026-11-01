@@ -492,48 +492,56 @@ productsContainer.addEventListener("click", (event) => {
   const image = event.target.closest(".product-image");
   if (!image) return;
 
+  const images = [...productsContainer.querySelectorAll(".product-image")];
+  let currentIndex = images.indexOf(image);
+
   const overlay = document.createElement("div");
   overlay.id = "image-lightbox";
-
   overlay.style.cssText = `
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.92);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:99999;
-    padding:20px;
-    cursor:zoom-out;
+    position:fixed;inset:0;background:rgba(0,0,0,.94);
+    display:flex;align-items:center;justify-content:center;
+    z-index:99999;padding:20px;touch-action:pan-y;
   `;
 
   const enlargedImage = document.createElement("img");
-  enlargedImage.src = image.src;
-  enlargedImage.alt = image.alt;
+  enlargedImage.style.cssText =
+    "max-width:95%;max-height:85vh;object-fit:contain;";
 
-  enlargedImage.style.cssText = `
-    max-width:95%;
-    max-height:90vh;
-    object-fit:contain;
-    cursor:default;
-  `;
+  function showImage() {
+    enlargedImage.src = images[currentIndex].src;
+    enlargedImage.alt = images[currentIndex].alt;
+  }
 
   const closeButton = document.createElement("button");
   closeButton.textContent = "✕";
   closeButton.style.cssText = `
-    position:absolute;
-    top:20px;
-    right:22px;
-    background:none;
-    border:none;
-    color:white;
-    font-size:30px;
-    cursor:pointer;
+    position:absolute;top:20px;right:22px;background:none;
+    border:none;color:white;font-size:30px;cursor:pointer;
   `;
 
-  overlay.appendChild(enlargedImage);
-  overlay.appendChild(closeButton);
-  document.body.appendChild(overlay);
+  const previousButton = document.createElement("button");
+  previousButton.textContent = "‹";
+  previousButton.style.cssText = `
+    position:absolute;left:15px;top:50%;background:none;
+    border:none;color:white;font-size:45px;cursor:pointer;
+  `;
+
+  const nextButton = document.createElement("button");
+  nextButton.textContent = "›";
+  nextButton.style.cssText = `
+    position:absolute;right:15px;top:50%;background:none;
+    border:none;color:white;font-size:45px;cursor:pointer;
+  `;
+
+  function previousImage() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    showImage();
+  }
+
+  function nextImage() {
+    currentIndex = (currentIndex + 1) % images.length;
+    showImage();
+  }
 
   function closeLightbox() {
     overlay.remove();
@@ -542,13 +550,42 @@ productsContainer.addEventListener("click", (event) => {
 
   function handleEscape(event) {
     if (event.key === "Escape") closeLightbox();
+    if (event.key === "ArrowLeft") nextImage();
+    if (event.key === "ArrowRight") previousImage();
   }
 
+  let touchStartX = 0;
+
+  overlay.addEventListener("touchstart", (event) => {
+    touchStartX = event.changedTouches[0].screenX;
+  }, { passive: true });
+
+  overlay.addEventListener("touchend", (event) => {
+    const touchEndX = event.changedTouches[0].screenX;
+    const difference = touchEndX - touchStartX;
+
+    if (Math.abs(difference) < 45) return;
+    if (difference < 0) nextImage();
+    else previousImage();
+  }, { passive: true });
+
   closeButton.addEventListener("click", closeLightbox);
+  previousButton.addEventListener("click", previousImage);
+  nextButton.addEventListener("click", nextImage);
+
   overlay.addEventListener("click", (event) => {
     if (event.target === overlay) closeLightbox();
   });
 
+  showImage();
+  overlay.append(
+    enlargedImage,
+    closeButton,
+    previousButton,
+    nextButton
+  );
+
+  document.body.appendChild(overlay);
   document.addEventListener("keydown", handleEscape);
 });
 loadProducts();
