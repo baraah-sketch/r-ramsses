@@ -404,3 +404,73 @@ imageOverlay.addEventListener("click", event => {
   document.getElementById("zoomImage").src = "";
  }
 });
+document.getElementById("checkoutForm").addEventListener("submit", async event => {
+ event.preventDefault();
+
+ if (!bagItems.length) {
+  showNotice("Your bag is empty.");
+  return;
+ }
+
+ if (SUPABASE_KEY === "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE") {
+  showNotice("Please add your Supabase key first.");
+  return;
+ }
+
+ const button = document.getElementById("placeOrder");
+ button.disabled = true;
+ button.textContent = "SENDING...";
+
+ const order = {
+  customer_name: document.getElementById("customerName").value.trim(),
+  phone: document.getElementById("customerPhone").value.trim(),
+  address: document.getElementById("customerAddress").value.trim(),
+  items: bagItems.map(item => ({
+   product_id: item.id,
+   name: item.name,
+   color: item.color,
+   size: item.size,
+   price: item.price,
+   quantity: item.quantity
+  })),
+  total: bagItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+  status: "pending",
+  payment_status: "pending"
+ };
+
+ try {
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
+   method: "POST",
+   headers: {
+    "apikey": SUPABASE_KEY,
+    "Authorization": `Bearer ${SUPABASE_KEY}`,
+    "Content-Type": "application/json",
+    "Prefer": "return=minimal"
+   },
+   body: JSON.stringify(order)
+  });
+
+  if (!response.ok) {
+   const message = await response.text();
+   throw new Error(message || "Order could not be sent.");
+  }
+
+  bagItems = [];
+  renderBag();
+  document.getElementById("checkoutForm").reset();
+  document.getElementById("checkoutForm").hidden = true;
+  showNotice("Your order has been received. We will contact you to confirm it.");
+ } catch (error) {
+  console.error(error);
+  showNotice("Could not send your order. Please try again.");
+ } finally {
+  button.disabled = false;
+  button.textContent = "PLACE ORDER";
+ }
+});
+
+loadProducts();
+renderBag();
+</script>
+</body>
+</html>
