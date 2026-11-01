@@ -309,6 +309,15 @@ h1,h2,.collection h3{
     border-color: #fff;
   }
 }
+  .bag {
+  background: none;
+  border: 0;
+  color: #111;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 8px;
+}
 </style>
 </head>
 <body>
@@ -316,7 +325,9 @@ h1,h2,.collection h3{
 <header>
 <a class="logo" href="#">R. RAMSSES</a>
 <nav><a href="#new">NEW ARRIVALS</a><a href="#collection">COLLECTIONS</a><a href="#about">OUR PHILOSOPHY</a></nav>
-<a class="bag" href="#new">BAG (<span id="count">0</span>)</a>
+<button class="bag" id="openBag" type="button">
+  BAG (<span id="count">0</span>)
+</button>
 </header>
 <main>
 <section class="hero">
