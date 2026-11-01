@@ -640,6 +640,21 @@ productsContainer.addEventListener("click", (event) => {
 
   document.addEventListener("keydown", handleEscape);
 });
+const bagOverlay = document.getElementById("bagOverlay");
+
+document.getElementById("openBag").addEventListener("click", () => {
+  bagOverlay.hidden = false;
+});
+
+document.getElementById("closeBag").addEventListener("click", () => {
+  bagOverlay.hidden = true;
+});
+
+bagOverlay.addEventListener("click", (event) => {
+  if (event.target === bagOverlay) {
+    bagOverlay.hidden = true;
+  }
+});  
 loadProducts();
 </script>
 </body>
