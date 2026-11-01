@@ -5,380 +5,98 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#111111">
 <title>R. RAMSSES | Luxury Menswear</title>
-
-  <style>
-:root{--black:#111;--white:#faf9f6;--gray:#777;--line:#dedbd5}
+<style>
+:root{--black:#111;--white:#f8f8f6;--gray:#777;--line:#dedbd5}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--white);color:var(--black);font-family:"Helvetica Neue",Arial,sans-serif}
+body.modal-open{overflow:hidden}
 a{color:inherit;text-decoration:none}
-.topbar{text-align:center;background:#111;color:white;padding:10px;font-size:10px;letter-spacing:2px}
-header{padding:22px 6%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+button,input,textarea,select{font:inherit}
+.topbar{text-align:center;background:#111;color:#fff;padding:11px 10px;font-size:9px;letter-spacing:2.3px}
+header{padding:22px 6%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:18px}
 .logo{font-family:"Times New Roman",Georgia,serif;font-size:20px;font-weight:bold;letter-spacing:3.5px}
-nav{display:flex;gap:22px;font-family:"Helvetica Neue",Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:1.4px}
-.bag{font-size:12px}
-.hero{min-height:510px;background:#dedbd5;display:flex;align-items:center;padding:8%;position:relative;overflow:hidden}
-.hero:after{content:"";position:absolute;right:7%;top:8%;width:38%;height:84%;background:linear-gradient(145deg,#aaa59c,#4c4945 52%,#171717);border-radius:48% 48% 8px 8px;opacity:.88}
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 520px;
-  color: #FFFFFF;
-}
-
-.eyebrow {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: #FFFFFF;
-}
-
-h1 {
-  font-family: "Arial Black", "Helvetica Neue", Arial, sans-serif;
-  font-weight: 900;
-  font-size: clamp(36px, 6vw, 68px);
-  line-height: 1.02;
-  letter-spacing: -1.5px;
-  margin: 22px 0;
-  color: #FFFFFF;
-  text-transform: uppercase;
-}
-
-.hero p {
-  color: #F0F0F0;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.8;
-  max-width: 320px;
-}
-
-.button {
-  display: inline-block;
-  background: #FFFFFF;
-  color: #111111;
-  padding: 16px 26px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1.8px;
-  margin-top: 15px;
-  border: 1px solid #FFFFFF;
-  cursor: pointer;
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-.button span {
-  color: #111111;
-  display: inline-block;
-  margin-left: 5px;
-}
+nav{display:flex;gap:22px;font-size:10px;font-weight:700;letter-spacing:1.4px}
+.bag{background:none;border:0;color:#111;font-size:12px;cursor:pointer;padding:8px;letter-spacing:1px}
+.hero{min-height:580px;background:#171717;color:#fff;display:flex;align-items:center;padding:8%;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;inset:0 0 0 38%;background:linear-gradient(90deg,rgba(17,17,17,.5),rgba(17,17,17,.04)),url("https://baraah-sketch.github.io/r-ramsses/central-cee-1.jpg.JPG") center/cover no-repeat}
+.hero-content{position:relative;z-index:2;max-width:460px;color:#fff}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:inherit}
+h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(38px,6vw,68px);line-height:1.02;letter-spacing:-1px;margin:22px 0;text-transform:uppercase}
+.hero p{color:#dedede;font-size:14px;line-height:1.8;max-width:320px}
+.button{display:inline-block;background:#fff;color:#111;padding:16px 26px;font-size:10px;font-weight:800;letter-spacing:1.8px;margin-top:15px;border:1px solid #fff;cursor:pointer}
 .section{padding:65px 6%}
 .section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:28px}
 h2{font-family:Georgia,serif;font-size:34px;font-weight:400;margin:0 0 8px}
 .muted{color:var(--gray);font-size:12px;line-height:1.7}
-.products {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 28px 22px;
-}
-.product-art {
-  height: 320px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  background: #f0efec;
-}
-
-.product-art.dark {
-  background: #e5e3df;
-}
-.coat{height:72%;width:46%;background:#242424;clip-path:polygon(28% 0,43% 7%,57% 7%,72% 0,100% 25%,83% 42%,73% 32%,78% 100%,22% 100%,27% 32%,17% 42%,0 25%);filter:drop-shadow(5px 8px 8px #888)}
-.coat.light{background:#b7b1a7}
-.coat.suit{background:#4c4a46}
-.product-info {
-  padding: 18px 0;
-}
-
-.product-info h3 {
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-  line-height: 1.5;
-  margin: 0 0 9px;
-}
-.price {
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.4px;
-  color: #555555;
-  margin-top: 4px;
-}
-.tag {
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1.8px;
-  text-transform: uppercase;
-  color: #888888;
-  margin-bottom: 10px;
-}
-.add {
-  margin-top: 14px;
-  background: #111111;
-  color: #FFFFFF;
-  border: 1px solid #111111;
-  padding: 12px 16px;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 22px}
+.product-art{height:360px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:#eeece7}
+.product-image{width:100%;height:100%;object-fit:cover;object-position:center;cursor:zoom-in}
+.product-info{padding:17px 0}
+.product-info h3{font-size:14px;font-weight:700;line-height:1.5;margin:0 0 9px}
+.price{font-size:12px;color:#555;margin-top:4px}
+.tag{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:10px}
+.add{margin-top:14px;width:100%;background:#111;color:#fff;border:1px solid #111;padding:13px 16px;font-size:10px;font-weight:700;letter-spacing:1.5px;cursor:pointer}
+.add:hover{background:#fff;color:#111}
+.add:disabled{opacity:.45;cursor:not-allowed}
 .collections{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.collection{min-height:230px;padding:28px;display:flex;flex-direction:column;justify-content:end;background:#252525;color:#fff}
+.collection{min-height:230px;padding:34px;display:flex;flex-direction:column;justify-content:end;background:#252525;color:#fff}
 .collection:nth-child(2){background:#d8d3ca;color:#111}
 .collection span{font-size:10px;letter-spacing:2px}
 .collection h3{font:32px Georgia,serif;margin:10px 0}
-.about{background:#eeeae3;text-align:center;padding:65px 12%}
+.about{background:#eeece7;text-align:center;padding:65px 12%}
 .about p{max-width:580px;margin:18px auto;color:#555;font-size:13px;line-height:1.9}
 footer{background:#111;color:#eee;padding:35px 6%;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:11px;letter-spacing:1px}
-#notice{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:white;padding:14px 20px;font-size:12px;display:none;z-index:5;white-space:nowrap}
-@media(max-width:650px){header{padding:18px 5%;flex-wrap:wrap;gap:15px}nav{order:3;width:100%;justify-content:space-between;gap:10px}.hero{min-height:470px;padding:8% 6%;align-items:flex-start}.hero:after{right:-12%;top:40%;width:55%;height:55%;opacity:.55}.hero-content{max-width:90%}h1{font-size:48px}.hero p{max-width:240px}.section{padding:45px 5%}.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.product-art{height:250px}.section-head{align-items:start;flex-direction:column}h2{font-size:29px}.collections{grid-template-columns:1fr}.collection{min-height:190px}.about{padding:48px 7%}.add {
-  width: 100%;
-  padding: 12px 6px;
-  font-size: 9px;
-  letter-spacing: 1px;
-}}
-/* R. RAMSSES — Luxury refinement */
-:root{
-  --black:#111111;
-  --white:#f8f8f6;
-  --gray:#777777;
-  --line:#d8d8d4;
-}
-
-body{
-  background:#f8f8f6;
-  color:#111111;
-  letter-spacing:.15px;
-}
-
-.topbar{
-  padding:12px 10px;
-  font-size:9px;
-  letter-spacing:2.5px;
-}
-
-header{
-  padding-top:26px;
-  padding-bottom:26px;
-  background:#f8f8f6;
-}
-
-.logo{
-  font-size:20px;
-  letter-spacing:3.5px;
-}
-
-nav{
-  text-transform:uppercase;
-  letter-spacing:1.5px;
-}
-
-.hero{
-  background:#e7e5e0;
-  min-height:560px;
-}
-
-.hero:after{
-  background:linear-gradient(145deg,#aaa9a4,#55534f 55%,#181818);
-}
-
-.eyebrow,.tag{
-  letter-spacing:2.5px;
-}
-
-h1,h2,.collection h3{
-  font-family:Georgia,"Times New Roman",serif;
-  font-weight:400;
-}
-
-.button{
-  transition:background .2s ease,color .2s ease;
-}
-
-.button:hover{
-  background:transparent;
-  color:#111;
-}
-
-.product-art{
-  background:#eeece7;
-}
-
-.product-art.dark{
-  background:#dedbd5;
-}
-
-.product-info h3{
-  letter-spacing:.3px;
-}
-.product-info h3 {
-  font-size: 13px;
-  line-height: 1.5;
-}
-.add {
-  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-
-.add:hover {
-  background: #FFFFFF;
-  color: #111111;
-  border-color: #111111;
-}
-
-.collection{
-  padding:34px;
-}
-
-.about{
-  background:#eeece7;
-}
-
+#notice{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:white;padding:14px 20px;font-size:12px;display:none;z-index:10010;max-width:90%;text-align:center}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:10000;display:flex;justify-content:flex-end}
+.overlay[hidden]{display:none}
+.drawer{width:min(480px,100%);height:100%;overflow-y:auto;background:#fff;color:#111;padding:30px 24px;position:relative}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ddd;padding-bottom:18px}
+.drawer-head h2{font:22px Georgia,serif;letter-spacing:2px;margin:0}
+.close{border:0;background:none;font-size:30px;cursor:pointer;line-height:1}
+.bag-row{display:grid;grid-template-columns:90px 1fr;gap:15px;padding:20px 0;border-bottom:1px solid #e5e5e5}
+.bag-row img{width:90px;height:115px;object-fit:cover;background:#eee}
+.bag-row h3{font-size:13px;margin:0 0 7px}
+.bag-row p{font-size:11px;color:#666;margin:5px 0}
+.bag-row-actions{display:flex;align-items:center;gap:9px;margin-top:10px}
+.qty-btn,.remove-btn{border:1px solid #ccc;background:#fff;padding:5px 9px;cursor:pointer;font-size:12px}
+.remove-btn{margin-left:auto;border:0;text-decoration:underline}
+.bag-summary{border-top:1px solid #ddd;margin-top:22px;padding-top:18px}
+.total-line{display:flex;justify-content:space-between;font-size:13px;letter-spacing:1px;margin-bottom:18px}
+.primary-btn{width:100%;padding:16px;background:#111;color:#fff;border:1px solid #111;font-size:11px;font-weight:700;letter-spacing:1.7px;cursor:pointer}
+.primary-btn:disabled{opacity:.5;cursor:not-allowed}
+.empty-bag{text-align:center;color:#777;padding:45px 10px;font-size:13px}
+.form-field{display:block;margin:14px 0}
+.form-field span{display:block;font-size:10px;letter-spacing:1px;margin-bottom:7px;text-transform:uppercase}
+.form-field input,.form-field textarea{width:100%;padding:13px;border:1px solid #ccc;background:#fff;border-radius:0;font-size:13px}
+.form-field textarea{min-height:75px;resize:vertical}
+.modal-card{width:min(440px,100%);max-height:100%;overflow:auto;background:#fff;padding:28px 24px;margin:auto}
+.modal-card h2{font-size:25px;margin:10px 0 20px}
+.option-label{display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase;margin:18px 0 8px}
+.option-select{width:100%;padding:13px;border:1px solid #ccc;background:#fff;border-radius:0}
+.modal-actions{display:flex;gap:10px;margin-top:22px}
+.secondary-btn{flex:1;padding:15px;background:#fff;border:1px solid #111;cursor:pointer;font-size:10px;letter-spacing:1px}
+.modal-actions .primary-btn{flex:1}
 @media(max-width:650px){
-  .hero{min-height:490px}
-  header{padding-top:20px;padding-bottom:20px}
-  .logo{font-size:18px}
-  .product-art{height:220px}
+ header{padding:18px 5%;flex-wrap:wrap;gap:14px}
+ nav{order:3;width:100%;justify-content:space-between;gap:8px;font-size:9px}
+ .logo{font-size:18px}
+ .hero{min-height:540px;padding:9% 6%;align-items:flex-start}
+ .hero:after{inset:0;background:linear-gradient(90deg,rgba(17,17,17,.62),rgba(17,17,17,.15)),url("https://baraah-sketch.github.io/r-ramsses/central-cee-1.jpg.JPG") center/cover no-repeat}
+ .hero-content{max-width:100%;padding-top:10px}
+ .section{padding:45px 5%}
+ .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 11px}
+ .product-art{height:240px}
+ .product-info{padding:12px 0}
+ .product-info h3{font-size:12px}
+ .add{padding:12px 5px;font-size:9px;letter-spacing:1px}
+ .section-head{align-items:flex-start;flex-direction:column}
+ h2{font-size:29px}
+ .collections{grid-template-columns:1fr}
+ .collection{min-height:190px}
+ .about{padding:48px 7%}
+ .drawer{padding:24px 18px}
 }
-  /* R. RAMSSES — Sport Luxury Hero */
-.hero {
-  background: #171717;
-  color: #fff;
-  min-height: 580px;
-}
-
-.hero:after {
-  content: "";
-  position: absolute;
-  inset: 0 0 0 38%;
-  width: auto;
-  height: auto;
-  border-radius: 0;
-  opacity: 1;
-  background:
-  linear-gradient(90deg, rgba(17,17,17,.45), rgba(17,17,17,.05)),
- url("https://baraah-sketch.github.io/r-ramsses/central-cee-1.jpg.JPG")
-  center / cover no-repeat;
-}
-
-.hero-content {
-  color: #fff;
-  max-width: 460px;
-}
-
-.hero p {
-  color: #dedede;
-}
-
-@media(max-width:650px) {
-  .hero {
-    min-height: 540px;
-  }
-
-.hero:after {
-  inset: 0;
-  background: 
-  linear-gradient(90deg, rgba(17,17,17,.45), rgba(17,17,17,.05)),
-    url("https://baraah-sketch.github.io/r-ramsses/central-cee-1.jpg.JPG")
-    center / cover no-repeat;
-}
-  
-  .hero-content {
-    max-width: 100%;
-  }
-
-  .hero .button {
-    background: #fff;
-    color: #111;
-    border-color: #fff;
-  }
-}
-  .bag {
-  background: none;
-  border: 0;
-  color: #111;
-  font: inherit;
-  font-size: 12px;
-  cursor: pointer;
-  padding: 8px;
-}
- .bag-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: rgba(0,0,0,.55);
-  display: flex;
-  justify-content: flex-end;
-}
-
-.bag-overlay[hidden] {
-  display: none;
-}
-
-.bag-panel {
-  width: min(430px, 100%);
-  height: 100%;
-  overflow-y: auto;
-  background: #fff;
-  color: #111;
-  padding: 35px 25px;
-  position: relative;
-  box-sizing: border-box;
-}
-
-.close-bag {
-  position: absolute;
-  top: 18px;
-  right: 22px;
-  border: 0;
-  background: none;
-  font-size: 30px;
-  cursor: pointer;
-}
-
-.bag-panel h2 {
-  font-size: 22px;
-  letter-spacing: 2px;
-  margin: 35px 0;
-}
-
-.bag-total {
-  display: flex;
-  justify-content: space-between;
-  border-top: 1px solid #ddd;
-  padding: 22px 0;
-  margin-top: 25px;
-  font-size: 13px;
-  letter-spacing: 1px;
-}
-
-.checkout-btn {
-  width: 100%;
-  padding: 17px;
-  background: #111;
-  color: #fff;
-  border: 0;
-  cursor: pointer;
-  letter-spacing: 2px;
-  font-size: 12px;
-}   
 </style>
 </head>
 <body>
@@ -386,29 +104,18 @@ h1,h2,.collection h3{
 <header>
 <a class="logo" href="#">R. RAMSSES</a>
 <nav><a href="#new">NEW ARRIVALS</a><a href="#collection">COLLECTIONS</a><a href="#about">OUR PHILOSOPHY</a></nav>
-<button class="bag" id="openBag" type="button">
-  BAG (<span id="count">0</span>)
-</button>
+<button class="bag" id="openBag" type="button">BAG (<span id="count">0</span>)</button>
 </header>
 <main>
-<section class="hero">
-<div class="hero-content">
-  <div class="eyebrow">R. RAMSSES — SPORT LUXURY</div>
-
-  <h1>MOVE DIFFERENT.<br>STAND APART.</h1>
-
-  <p>Bold essentials. No ordinary presence.</p>
-
-<a class="button" href="#new">DISCOVER THE COLLECTION <span aria-hidden="true">↗︎</span></a>
- </div>
-</section>
+<section class="hero"><div class="hero-content">
+<div class="eyebrow">R. RAMSSES — SPORT LUXURY</div>
+<h1>MOVE DIFFERENT.<br>STAND APART.</h1>
+<p>Bold essentials. No ordinary presence.</p>
+<a class="button" href="#new">DISCOVER THE COLLECTION ↗</a>
+</div></section>
 <section class="section" id="new">
-<div class="section-head"><div><div class="eyebrow">Carefully selected</div><h2>Selected pieces</h2><div class="muted">A first look at our collection.</div></div><span class="muted">01 — 03</span></div>
-<div class="products">
-<article><div class="product-art"><div class="coat"></div></div><div class="product-info"><div class="tag">ESSENTIALS</div><h3>Classic Tailored Jacket</h3><div class="price">Price to be confirmed</div><button class="add" onclick="addItem('Classic Tailored Jacket')">ADD TO BAG +</button></div></article>
-<article><div class="product-art dark"><div class="coat light"></div></div><div class="product-info"><div class="tag">NEW SEASON</div><h3>Modern Neutral Coat</h3><div class="price">Price to be confirmed</div><button class="add" onclick="addItem('Modern Neutral Coat')">ADD TO BAG +</button></div></article>
-<article><div class="product-art"><div class="coat suit"></div></div><div class="product-info"><div class="tag">SIGNATURE</div><h3>Evening Suit Jacket</h3><div class="price">Price to be confirmed</div><button class="add" onclick="addItem('Evening Suit Jacket')">ADD TO BAG +</button></div></article>
-</div>
+<div class="section-head"><div><div class="eyebrow">Carefully selected</div><h2>Selected pieces</h2><div class="muted">A first look at our collection.</div></div><span class="muted">R. RAMSSES</span></div>
+<div class="products" id="products"><p class="muted">Loading collection...</p></div>
 </section>
 <section class="section" id="collection">
 <div class="eyebrow">Find your signature</div><h2 style="margin-top:12px;margin-bottom:25px">Made for every occasion.</h2>
@@ -416,273 +123,284 @@ h1,h2,.collection h3{
 </section>
 <section class="about" id="about"><div class="eyebrow">Our philosophy</div><h2 style="margin-top:15px">Less, but better.</h2><p>We believe true style speaks quietly. Thoughtful design, enduring simplicity, and pieces chosen to become part of your story. This is a space for timeless menswear.</p></section>
 </main>
-  <footer><span class="logo">R. RAMSSES</span><span>TIMELESS BY DESIGN.</span><span>CONTACT · SHIPPING · RETURNS</span><span>© 2026</span></footer>
-  <div id="bagOverlay" class="bag-overlay" hidden>
-  <section class="bag-panel" role="dialog" aria-modal="true">
-    <button id="closeBag" class="close-bag" type="button">×</button>
+<footer><span class="logo">R. RAMSSES</span><span>TIMELESS BY DESIGN.</span><span>CONTACT · SHIPPING · RETURNS</span><span>© 2026</span></footer>
 
-    <h2>YOUR BAG</h2>
-
-    <div id="bagContents"></div>
-
-    <div class="bag-total">
-      <span>TOTAL</span>
-      <strong id="bagTotal">0.00</strong>
-    </div>
-
-    <button id="checkoutBtn" class="checkout-btn" type="button">
-      CHECKOUT
-    </button>
-  </section>
+<!-- Product options -->
+<div id="optionsOverlay" class="overlay" hidden>
+ <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="optionsTitle">
+  <div class="drawer-head"><h2 id="optionsTitle">SELECT OPTIONS</h2><button class="close" id="closeOptions" type="button" aria-label="Close">×</button></div>
+  <div id="optionsProductName" class="muted"></div>
+  <label class="option-label" for="colorSelect">Color</label>
+  <select id="colorSelect" class="option-select"></select>
+  <label class="option-label" for="sizeSelect">Size</label>
+  <select id="sizeSelect" class="option-select"></select>
+  <div class="muted" id="optionsPrice" style="margin-top:16px"></div>
+  <div class="modal-actions"><button class="secondary-btn" id="cancelOptions" type="button">CANCEL</button><button class="primary-btn" id="confirmAdd" type="button">ADD TO BAG</button></div>
+ </section>
 </div>
-<div id="notice" role="status"></div>
+<!-- Shopping bag -->
+<div id="bagOverlay" class="overlay" hidden>
+ <aside class="drawer">
+  <div class="drawer-head"><h2>YOUR BAG</h2><button class="close" id="closeBag" type="button">×</button></div>
+  <div id="bagItems"></div>
+  <div class="bag-summary">
+   <div class="total-line"><span>TOTAL</span><strong id="bagTotal">0.00</strong></div>
+   <button class="primary-btn" id="checkoutButton" type="button">CHECKOUT</button>
+  </div>
+  <form id="checkoutForm" hidden>
+   <h2 style="margin-top:28px">YOUR DETAILS</h2>
+   <label class="form-field"><span>Full name</span><input id="customerName" required autocomplete="name"></label>
+   <label class="form-field"><span>Phone number</span><input id="customerPhone" required type="tel" autocomplete="tel"></label>
+   <label class="form-field"><span>Delivery address</span><textarea id="customerAddress" required autocomplete="street-address"></textarea></label>
+   <button class="primary-btn" id="placeOrder" type="submit">PLACE ORDER</button>
+  </form>
+ </aside>
+</div>
+
+<!-- Image zoom -->
+<div id="imageOverlay" class="overlay" hidden style="align-items:center;justify-content:center">
+ <button id="closeImage" class="close" type="button" style="position:absolute;right:22px;top:18px;color:white">×</button>
+ <img id="zoomImage" alt="Product image" style="max-width:94vw;max-height:90vh;object-fit:contain">
+</div>
+<div id="notice"></div>
 
 <script>
 const SUPABASE_URL = "https://oaqqkzxewgwrspvqlhbn.supabase.co";
-const SUPABASE_KEY = "sb_publishable_vemDmCa3CjndsNQ3d7_ePQ_3uQWOifG";
+const SUPABASE_KEY = "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
 
-const productsContainer = document.querySelector(".products");
-const bagItems = new Map();
+const productsElement = document.getElementById("products");
+const bagOverlay = document.getElementById("bagOverlay");
+const optionsOverlay = document.getElementById("optionsOverlay");
+const imageOverlay = document.getElementById("imageOverlay");
+const bagItemsElement = document.getElementById("bagItems");
+const bagTotalElement = document.getElementById("bagTotal");
+const countElement = document.getElementById("count");
 
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
+let products = [];
+let bagItems = [];
+let selectedProduct = null;
+
+function showNotice(message) {
+ const notice = document.getElementById("notice");
+ notice.textContent = message;
+ notice.style.display = "block";
+ clearTimeout(showNotice.timer);
+ showNotice.timer = setTimeout(() => notice.style.display = "none", 3200);
 }
 
 function money(value) {
-  return Number(value).toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  });
+ return Number(value || 0).toFixed(2);
 }
 
-function updateBagCount() {
-  const count = [...bagItems.values()]
-    .reduce((sum, item) => sum + item.quantity, 0);
-
-  document.getElementById("count").textContent = count;
+function escapeHTML(value) {
+ return String(value ?? "").replace(/[&<>"']/g, char => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+ })[char]);
 }
 
-function addItem(product) {
-  const current = bagItems.get(product.id);
-
-  if (current) {
-    current.quantity += 1;
-  } else {
-    bagItems.set(product.id, {
-      product_id: product.id,
-      name: product.name,
-      price: Number(product.price),
-      quantity: 1
-    });
-  }
-
-updateBagCount();
-renderBag();
-  const notice = document.getElementById("notice");
-  notice.textContent = product.name + " added to your bag";
-  notice.style.display = "block";
-
-  setTimeout(() => {
-    notice.style.display = "none";
-  }, 2200);
+function optionList(value, fallback) {
+ if (Array.isArray(value)) return value.map(String).filter(Boolean);
+ if (typeof value === "string" && value.trim()) {
+  return value.split(/[,;|]/).map(item => item.trim()).filter(Boolean);
+ }
+ return fallback;
 }
-function renderBag() {
-  const bagContents = document.getElementById("bagContents");
-  const bagTotal = document.getElementById("bagTotal");
 
-  bagContents.innerHTML = "";
-  let total = 0;
-
-  if (bagItems.size === 0) {
-    bagContents.innerHTML = "<p>Your bag is empty.</p>";
-  }
-
-  bagItems.forEach((item, id) => {
-    const subtotal = item.price * item.quantity;
-    total += subtotal;
-
-    bagContents.innerHTML += `
-      <div class="bag-item">
-        <div>
-          <strong>${item.name}</strong>
-          <p>${item.price.toFixed(2)} × ${item.quantity}</p>
-        </div>
-        <strong>${subtotal.toFixed(2)}</strong>
-      </div>
-    `;
-  });
-
-  bagTotal.textContent = total.toFixed(2);
-}
 async function loadProducts() {
-  productsContainer.innerHTML =
-    '<p class="muted">Loading collection...</p>';
+ productsElement.innerHTML = '<p class="muted">Loading collection...</p>';
 
-  try {
-    const response = await fetch(
-      `${SUPABASE_URL}/rest/v1/products?select=id,name,description,category,price,image_url,colors,sizes,stock&active=eq.true&order=created_at.desc`,
-      {
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${SUPABASE_KEY}`
-        }
-      }
-    );
+ if (SUPABASE_KEY === sb_publishable_vemDmCa3CjndsNQ3d7_ePQ_3uQWOifG) {
+  productsElement.innerHTML = '<p class="muted">Add your Supabase publishable key to load products.</p>';
+  return;
+ }
 
-    if (!response.ok) {
-      console.error("Supabase response:", await response.text());
-      throw new Error("Could not load products.");
+ try {
+  const response = await fetch(
+   `${SUPABASE_URL}/rest/v1/products?select=*&active=eq.true&order=created_at.desc`,
+   {
+    headers: {
+     "apikey": SUPABASE_KEY,
+     "Authorization": `Bearer ${SUPABASE_KEY}`
     }
+   }
+  );
 
-    const products = await response.json();
+  if (!response.ok) throw new Error("Could not load products");
+  products = await response.json();
+  renderProducts();
+ } catch (error) {
+  console.error(error);
+  productsElement.innerHTML = '<p class="muted">Unable to load products. Please check your connection and Supabase settings.</p>';
+ }
+}
 
-    if (!products.length) {
-      productsContainer.innerHTML =
-        '<p class="muted">Our collection is being prepared. Please visit again soon.</p>';
-      return;
-    }
+function renderProducts() {
+ if (!products.length) {
+  productsElement.innerHTML = '<p class="muted">No products available yet.</p>';
+  return;
+ }
 
-    productsContainer.innerHTML = products.map(product => {
-      const name = escapeHTML(product.name);
-      const category = escapeHTML(product.category);
-      const description = escapeHTML(product.description || "");
-      const image = typeof product.image_url === "string"
-        ? product.image_url
-        : "";
-
-   const imageHTML = /^https:\/\/[^"'<>]+$/i.test(image)
-  ? `<img class="product-image" src="${escapeHTML(image)}" alt="${escapeHTML(name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center;cursor:zoom-in">`
-  : '<div class="coat"></div>';
-      
-      const unavailable = Number(product.stock) <= 0;
-      const colors = Array.isArray(product.colors)
-        ? product.colors.join(", ")
-        : "";
-      const sizes = Array.isArray(product.sizes)
-        ? product.sizes.join(", ")
-        : "";
-
-      return `
-        <article>
-          <div class="product-art">${imageHTML}</div>
-          <div class="product-info">
-            <div class="tag">${category}</div>
-            <h3>${name}</h3>
-            <div class="price">${money(product.price)}</div>
-            <div class="muted">${description}</div>
-            <div class="muted">Colors: ${escapeHTML(colors || "Ask us")}</div>
-            <div class="muted">Sizes: ${escapeHTML(sizes || "Ask us")}</div>
-            <button class="add" type="button"
-              data-product-id="${escapeHTML(product.id)}"
-              ${unavailable ? "disabled" : ""}>
-              ${unavailable ? "OUT OF STOCK" : "ADD TO BAG +"}
-            </button>
-          </div>
-        </article>
-      `;
-    }).join("");
-
-    productsContainer.querySelectorAll("[data-product-id]").forEach(button => {
-      button.addEventListener("click", () => {
-        const product = products.find(
-          item => item.id === button.dataset.productId
-        );
-
-        if (product) addItem(product);
-      });
-    });
-
-  } catch (error) {
-    console.error(error);
-    productsContainer.innerHTML =
-      '<p class="muted">Unable to load products. Please check the connection settings.</p>';
-  }
-}// PRODUCT IMAGE ZOOM
-productsContainer.addEventListener("click", (event) => {
-  const image = event.target.closest(".product-image");
-  if (!image) return;
-
-  const overlay = document.createElement("div");
-  overlay.id = "image-lightbox";
-
-  overlay.style.cssText = `
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.92);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:99999;
-    padding:20px;
-    cursor:zoom-out;
+ productsElement.innerHTML = products.map(product => {
+  const image = product.image_url || "";
+  return `
+   <article class="product">
+    <div class="product-art">
+     ${image ? `<img class="product-image" src="${escapeHTML(image)}" alt="${escapeHTML(product.name)}" data-zoom="${escapeHTML(image)}">` : ""}
+    </div>
+    <div class="product-info">
+     <div class="tag">${escapeHTML(product.category || "R. RAMSSES")}</div>
+     <h3>${escapeHTML(product.name)}</h3>
+     <div class="muted">${escapeHTML(product.description || "")}</div>
+     <div class="price">${money(product.price)}</div>
+     <button class="add" type="button" data-product-id="${escapeHTML(product.id)}">SELECT OPTIONS</button>
+    </div>
+   </article>
   `;
+ }).join("");
 
-  const enlargedImage = document.createElement("img");
-  enlargedImage.src = image.src;
-  enlargedImage.alt = image.alt;
-
-  enlargedImage.style.cssText = `
-    max-width:95%;
-    max-height:90vh;
-    object-fit:contain;
-    cursor:default;
-  `;
-
-  const closeButton = document.createElement("button");
-  closeButton.textContent = "✕";
-  closeButton.style.cssText = `
-    position:absolute;
-    top:20px;
-    right:22px;
-    background:none;
-    border:none;
-    color:white;
-    font-size:30px;
-    cursor:pointer;
-  `;
-
-  overlay.appendChild(enlargedImage);
-  overlay.appendChild(closeButton);
-  document.body.appendChild(overlay);
-
-  function closeLightbox() {
-    overlay.remove();
-    document.removeEventListener("keydown", handleEscape);
-  }
-
-  function handleEscape(event) {
-    if (event.key === "Escape") closeLightbox();
-  }
-
-  closeButton.addEventListener("click", closeLightbox);
-  overlay.addEventListener("click", (event) => {
-    if (event.target === overlay) closeLightbox();
+ productsElement.querySelectorAll(".add").forEach(button => {
+  button.addEventListener("click", () => {
+   const product = products.find(item => String(item.id) === button.dataset.productId);
+   if (product) openOptions(product);
   });
+ });
 
-  document.addEventListener("keydown", handleEscape);
+ productsElement.querySelectorAll("[data-zoom]").forEach(image => {
+  image.addEventListener("click", () => openImage(image.dataset.zoom));
+ });
+}
+
+function openOptions(product) {
+ selectedProduct = product;
+ document.getElementById("optionsProductName").textContent = product.name;
+ document.getElementById("optionsPrice").textContent = `Price: ${money(product.price)}`;
+
+ const colors = optionList(product.colors, ["One color"]);
+ const sizes = optionList(product.sizes, ["One size"]);
+
+ document.getElementById("colorSelect").innerHTML =
+  colors.map(color => `<option value="${escapeHTML(color)}">${escapeHTML(color)}</option>`).join("");
+
+ document.getElementById("sizeSelect").innerHTML =
+  sizes.map(size => `<option value="${escapeHTML(size)}">${escapeHTML(size)}</option>`).join("");
+
+ optionsOverlay.hidden = false;
+ document.body.classList.add("modal-open");
+}
+
+function closeOptions() {
+ optionsOverlay.hidden = true;
+ selectedProduct = null;
+ document.body.classList.remove("modal-open");
+}
+
+document.getElementById("closeOptions").addEventListener("click", closeOptions);
+document.getElementById("cancelOptions").addEventListener("click", closeOptions);
+
+document.getElementById("confirmAdd").addEventListener("click", () => {
+ if (!selectedProduct) return;
+
+ const color = document.getElementById("colorSelect").value;
+ const size = document.getElementById("sizeSelect").value;
+ const key = `${selectedProduct.id}|${color}|${size}`;
+
+ const existing = bagItems.find(item => item.key === key);
+ if (existing) {
+  existing.quantity += 1;
+ } else {
+  bagItems.push({
+   key,
+   id: selectedProduct.id,
+   name: selectedProduct.name,
+   image_url: selectedProduct.image_url || "",
+   price: Number(selectedProduct.price || 0),
+   color,
+   size,
+   quantity: 1
+  });
+ }
+
+ renderBag();
+ closeOptions();
+ showNotice("Added to your bag.");
 });
-const bagOverlay = document.getElementById("bagOverlay");
+
+function renderBag() {
+ const totalCount = bagItems.reduce((sum, item) => sum + item.quantity, 0);
+ countElement.textContent = totalCount;
+
+ if (!bagItems.length) {
+  bagItemsElement.innerHTML = '<div class="empty-bag">YOUR BAG IS CURRENTLY EMPTY.</div>';
+ } else {
+  bagItemsElement.innerHTML = bagItems.map(item => `
+   <div class="bag-row">
+    ${item.image_url ? `<img src="${escapeHTML(item.image_url)}" alt="${escapeHTML(item.name)}">` : '<div></div>'}
+    <div>
+     <h3>${escapeHTML(item.name)}</h3>
+     <p>Color: ${escapeHTML(item.color)}</p>
+     <p>Size: ${escapeHTML(item.size)}</p>
+     <p>${money(item.price)} each</p>
+     <div class="bag-row-actions">
+      <button class="qty-btn" type="button" data-action="minus" data-key="${escapeHTML(item.key)}">−</button>
+      <span>${item.quantity}</span>
+      <button class="qty-btn" type="button" data-action="plus" data-key="${escapeHTML(item.key)}">+</button>
+      <button class="remove-btn" type="button" data-action="remove" data-key="${escapeHTML(item.key)}">REMOVE</button>
+     </div>
+    </div>
+   </div>
+  `).join("");
+ }
+
+ const total = bagItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+ bagTotalElement.textContent = money(total);
+ document.getElementById("checkoutButton").disabled = !bagItems.length;
+
+ bagItemsElement.querySelectorAll("[data-action]").forEach(button => {
+  button.addEventListener("click", () => {
+   const item = bagItems.find(entry => entry.key === button.dataset.key);
+   if (!item) return;
+
+   if (button.dataset.action === "plus") item.quantity += 1;
+   if (button.dataset.action === "minus") item.quantity -= 1;
+   if (button.dataset.action === "remove" || item.quantity <= 0) {
+    bagItems = bagItems.filter(entry => entry.key !== item.key);
+   }
+   renderBag();
+  });
+ });
+}
 
 document.getElementById("openBag").addEventListener("click", () => {
-  renderBag();
-  bagOverlay.hidden = false;
-});
-document.getElementById("closeBag").addEventListener("click", () => {
-  bagOverlay.hidden = true;
+ bagOverlay.hidden = false;
+ document.body.classList.add("modal-open");
+ renderBag();
 });
 
-bagOverlay.addEventListener("click", (event) => {
-  if (event.target === bagOverlay) {
-    bagOverlay.hidden = true;
-  }
-});  
-loadProducts();
-</script>
-</body>
-</html>
+function closeBag() {
+ bagOverlay.hidden = true;
+ document.body.classList.remove("modal-open");
+}
+
+document.getElementById("closeBag").addEventListener("click", closeBag);
+
+document.getElementById("checkoutButton").addEventListener("click", () => {
+ document.getElementById("checkoutForm").hidden = false;
+ document.getElementById("checkoutForm").scrollIntoView({behavior:"smooth",block:"start"});
+});
+
+function openImage(url) {
+ document.getElementById("zoomImage").src = url;
+ imageOverlay.hidden = false;
+}
+
+document.getElementById("closeImage").addEventListener("click", () => {
+
+ imageOverlay.hidden = true;
+ document.getElementById("zoomImage").src = "";
+});
+imageOverlay.addEventListener("click", event => {
+ if (event.target === imageOverlay) {
+  imageOverlay.hidden = true;
+  document.getElementById("zoomImage").src = "";
+ }
+});
