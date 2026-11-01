@@ -128,7 +128,8 @@
   const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   let currentUser = null;
-
+let editingProductId = null;
+  
   function status(message) {
     $("formStatus").textContent = message;
   }
@@ -317,6 +318,23 @@
       price.textContent = safeText(product.price);
       info.appendChild(price);
 
+      const edit = document.createElement("button");
+edit.className = "secondary";
+edit.textContent = "تعديل المنتج";
+
+edit.addEventListener("click", () => {
+  editingProductId = product.id;
+
+  $("name").value = product.name || "";
+  $("price").value = product.price || "";
+  $("category").value = product.category || "Hoodies";
+
+  $("productForm").scrollIntoView({ behavior: "smooth" });
+  status("أنتِ الآن في وضع تعديل المنتج.");
+});
+
+info.appendChild(edit);
+      
       const remove = document.createElement("button");
       remove.className = "danger";
       remove.textContent = "حذف المنتج";
