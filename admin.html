@@ -328,7 +328,11 @@ edit.addEventListener("click", () => {
   $("name").value = product.name || "";
   $("price").value = product.price || "";
   $("category").value = product.category || "Hoodies";
-
+$("description").value = product.description || "";
+$("colors").value = (product.colors || []).join(", ");
+$("sizes").value = (product.sizes || []).join(", ");
+$("stock").value = product.stock ?? 0;
+$("photo").required = false;
   $("productForm").scrollIntoView({ behavior: "smooth" });
   status("أنتِ الآن في وضع تعديل المنتج.");
 });
