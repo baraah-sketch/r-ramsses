@@ -486,107 +486,53 @@ async function loadProducts() {
     productsContainer.innerHTML =
       '<p class="muted">Unable to load products. Please check the connection settings.</p>';
   }
-}
-// PRODUCT IMAGE ZOOM
+}// PRODUCT IMAGE ZOOM
 productsContainer.addEventListener("click", (event) => {
   const image = event.target.closest(".product-image");
   if (!image) return;
 
-  const images = [...productsContainer.querySelectorAll(".product-image")];
-  let currentIndex = images.indexOf(image);
-  let zoom = 1;
-  let startDistance = 0;
-  let startZoom = 1;
-  let touchStartX = 0;
-
   const overlay = document.createElement("div");
   overlay.id = "image-lightbox";
+
   overlay.style.cssText = `
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.94);
+    background:rgba(0,0,0,0.92);
     display:flex;
     align-items:center;
     justify-content:center;
     z-index:99999;
     padding:20px;
-    overflow:hidden;
+    cursor:zoom-out;
   `;
 
   const enlargedImage = document.createElement("img");
+  enlargedImage.src = image.src;
+  enlargedImage.alt = image.alt;
+
   enlargedImage.style.cssText = `
     max-width:95%;
-    max-height:85vh;
+    max-height:90vh;
     object-fit:contain;
-    transform:scale(1);
-    touch-action:none;
-    user-select:none;
-    -webkit-user-select:none;
+    cursor:default;
   `;
-
-  function showImage() {
-    enlargedImage.src = images[currentIndex].src;
-    enlargedImage.alt = images[currentIndex].alt;
-    zoom = 1;
-    enlargedImage.style.transform = "scale(1)";
-  }
-
-  function distance(touches) {
-    const dx = touches[0].clientX - touches[1].clientX;
-    const dy = touches[0].clientY - touches[1].clientY;
-    return Math.hypot(dx, dy);
-  }
-
-  enlargedImage.addEventListener("touchstart", (event) => {
-    if (event.touches.length === 2) {
-      startDistance = distance(event.touches);
-      startZoom = zoom;
-    }
-  }, { passive: true });
-
-  enlargedImage.addEventListener("touchmove", (event) => {
-    if (event.touches.length === 2) {
-      event.preventDefault();
-      const currentDistance = distance(event.touches);
-      zoom = Math.min(4, Math.max(1, startZoom * currentDistance / startDistance));
-      enlargedImage.style.transform = `scale(${zoom})`;
-    }
-  }, { passive: false });
-
-  enlargedImage.addEventListener("touchend", () => {
-    if (zoom < 1) zoom = 1;
-  });
 
   const closeButton = document.createElement("button");
   closeButton.textContent = "✕";
   closeButton.style.cssText = `
-    position:absolute;top:20px;right:22px;background:none;
-    border:none;color:white;font-size:30px;cursor:pointer;
+    position:absolute;
+    top:20px;
+    right:22px;
+    background:none;
+    border:none;
+    color:white;
+    font-size:30px;
+    cursor:pointer;
   `;
 
-  const previousButton = document.createElement("button");
-  previousButton.textContent = "‹";
-  previousButton.style.cssText = `
-    position:absolute;left:15px;top:50%;background:none;
-    border:none;color:white;font-size:45px;cursor:pointer;
-  `;
-
-  const nextButton = document.createElement("button");
-  nextButton.textContent = "›";
-  nextButton.style.cssText = `
-    position:absolute;right:15px;top:50%;background:none;
-    border:none;color:white;font-size:45px;cursor:pointer;
-  `;
-
-  function previousImage() {
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
-    showImage();
-  }
-
-  function nextImage() {
-    currentIndex = (currentIndex + 1) % images.length;
-    showImage();
-  }
+  overlay.appendChild(enlargedImage);
+  overlay.appendChild(closeButton);
+  document.body.appendChild(overlay);
 
   function closeLightbox() {
     overlay.remove();
@@ -595,37 +541,13 @@ productsContainer.addEventListener("click", (event) => {
 
   function handleEscape(event) {
     if (event.key === "Escape") closeLightbox();
-    if (event.key === "ArrowLeft") nextImage();
-    if (event.key === "ArrowRight") previousImage();
   }
 
-  overlay.addEventListener("touchstart", (event) => {
-    if (event.touches.length === 1 && zoom === 1) {
-      touchStartX = event.changedTouches[0].screenX;
-    }
-  }, { passive: true });
-
-  overlay.addEventListener("touchend", (event) => {
-    if (zoom !== 1 || event.changedTouches.length !== 1) return;
-
-    const difference = event.changedTouches[0].screenX - touchStartX;
-    if (Math.abs(difference) < 60) return;
-
-    if (difference < 0) nextImage();
-    else previousImage();
-  }, { passive: true });
-
   closeButton.addEventListener("click", closeLightbox);
-  previousButton.addEventListener("click", previousImage);
-  nextButton.addEventListener("click", nextImage);
-
   overlay.addEventListener("click", (event) => {
     if (event.target === overlay) closeLightbox();
   });
 
-  showImage();
-  overlay.append(enlargedImage, closeButton, previousButton, nextButton);
-  document.body.appendChild(overlay);
   document.addEventListener("keydown", handleEscape);
 });
 loadProducts();
