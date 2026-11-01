@@ -439,10 +439,10 @@ async function loadProducts() {
         ? product.image_url
         : "";
 
-      const imageHTML = /^https:\/\/[^"'<>]+$/i.test(image)
-        ? `<img src="${escapeHTML(image)}" alt="${name}" loading="lazy" style="width:100%;height:100%;object-fit:contain">`
-        : '<div class="coat"></div>';
-
+   const imageHTML = /^https:\/\/[^"'<>]+$/i.test(image)
+  ? `<img src="${escapeHTML(image)}" alt="${name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center">`
+  : '<div class="coat"></div>';
+      
       const unavailable = Number(product.stock) <= 0;
       const colors = Array.isArray(product.colors)
         ? product.colors.join(", ")
