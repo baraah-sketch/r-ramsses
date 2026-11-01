@@ -482,8 +482,8 @@ function addItem(product) {
     });
   }
 
-  updateBagCount();
-
+updateBagCount();
+renderBag();
   const notice = document.getElementById("notice");
   notice.textContent = product.name + " added to your bag";
   notice.style.display = "block";
@@ -670,9 +670,9 @@ productsContainer.addEventListener("click", (event) => {
 const bagOverlay = document.getElementById("bagOverlay");
 
 document.getElementById("openBag").addEventListener("click", () => {
+  renderBag();
   bagOverlay.hidden = false;
 });
-
 document.getElementById("closeBag").addEventListener("click", () => {
   bagOverlay.hidden = true;
 });
