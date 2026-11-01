@@ -209,7 +209,7 @@ function optionList(value, fallback) {
 async function loadProducts() {
  productsElement.innerHTML = '<p class="muted">Loading collection...</p>';
 
- if (SUPABASE_KEY === sb_publishable_vemDmCa3CjndsNQ3d7_ePQ_3uQWOifG) {
+ if (SUPABASE_KEY === "sb_publishable_vemDmCa3CjndsNQ3d7_ePQ_3uQWOifG") {
   productsElement.innerHTML = '<p class="muted">Add your Supabase publishable key to load products.</p>';
   return;
  }
@@ -394,7 +394,6 @@ function openImage(url) {
 }
 
 document.getElementById("closeImage").addEventListener("click", () => {
-
  imageOverlay.hidden = true;
  document.getElementById("zoomImage").src = "";
 });
@@ -404,7 +403,7 @@ imageOverlay.addEventListener("click", event => {
   document.getElementById("zoomImage").src = "";
  }
 });
-document.getElementById("checkoutForm").addEventListener("submit", async event => {
+ document.getElementById("checkoutForm").addEventListener("submit", async event => {
  event.preventDefault();
 
  if (!bagItems.length) {
