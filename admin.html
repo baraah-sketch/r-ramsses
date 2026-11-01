@@ -296,6 +296,9 @@ if (editingProductId) {
 }
 
 $("productForm").reset();
+      $("photo").required = true;
+$("productForm").querySelector("h2").textContent = "إضافة قطعة جديدة";
+$("saveBtn").textContent = "رفع الصورة وإضافة المنتج";
 $("stock").value = "1";
 await loadProducts();
     } catch (error) {
@@ -358,7 +361,8 @@ edit.textContent = "تعديل المنتج";
 
 edit.addEventListener("click", () => {
   editingProductId = product.id;
-
+$("productForm").querySelector("h2").textContent = "تعديل المنتج";
+$("saveBtn").textContent = "حفظ التعديلات";
   $("name").value = product.name || "";
   $("price").value = product.price || "";
   $("category").value = product.category || "Hoodies";
