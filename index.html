@@ -487,7 +487,70 @@ async function loadProducts() {
       '<p class="muted">Unable to load products. Please check the connection settings.</p>';
   }
 }
+// PRODUCT IMAGE ZOOM
+productsContainer.addEventListener("click", (event) => {
+  const image = event.target.closest(".product-image");
+  if (!image) return;
 
+  const overlay = document.createElement("div");
+  overlay.id = "image-lightbox";
+
+  overlay.style.cssText = `
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.92);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:99999;
+    padding:20px;
+    cursor:zoom-out;
+  `;
+
+  const enlargedImage = document.createElement("img");
+  enlargedImage.src = image.src;
+  enlargedImage.alt = image.alt;
+
+  enlargedImage.style.cssText = `
+    max-width:95%;
+    max-height:90vh;
+    object-fit:contain;
+    cursor:default;
+  `;
+
+  const closeButton = document.createElement("button");
+  closeButton.textContent = "✕";
+  closeButton.style.cssText = `
+    position:absolute;
+    top:20px;
+    right:22px;
+    background:none;
+    border:none;
+    color:white;
+    font-size:30px;
+    cursor:pointer;
+  `;
+
+  overlay.appendChild(enlargedImage);
+  overlay.appendChild(closeButton);
+  document.body.appendChild(overlay);
+
+  function closeLightbox() {
+    overlay.remove();
+    document.removeEventListener("keydown", handleEscape);
+  }
+
+  function handleEscape(event) {
+    if (event.key === "Escape") closeLightbox();
+  }
+
+  closeButton.addEventListener("click", closeLightbox);
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) closeLightbox();
+  });
+
+  document.addEventListener("keydown", handleEscape);
+});
 loadProducts();
 </script>
 </body>
