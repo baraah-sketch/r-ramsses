@@ -200,16 +200,17 @@ let editingProductId = null;
     }
 
     const file = $("photo").files[0];
-    if (!file) {
-      status("اختاري صورة للقطعة أولًا.");
-      return;
-    }
 
-    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
-    if (!allowedTypes.includes(file.type) || file.size > 5 * 1024 * 1024) {
-      status("الصورة يجب أن تكون JPG أو PNG أو WebP وبحجم 5 ميغابايت أو أقل.");
-      return;
-    }
+const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+if (file && (!allowedTypes.includes(file.type) || file.size > 5 * 1024 * 1024)) {
+  status("الصورة يجب أن تكون JPG أو PNG أو WebP وبحجم 5 ميغابايت أو أقل.");
+  return;
+}
+
+if (!editingProductId && !file) {
+  status("اختاري صورة للقطعة أولًا.");
+  return;
+}
 
     const name = $("name").value.trim();
     const price = Number($("price").value);
@@ -227,43 +228,76 @@ let editingProductId = null;
     let uploadedPath = null;
 
     try {
-      const extension = file.type === "image/png" ? "png" :
-                        file.type === "image/webp" ? "webp" : "jpg";
-      const path = currentUser.id + "/" + crypto.randomUUID() + "." + extension;
+      let imageUrl = null;
 
-      const { error: uploadError } = await client.storage
-        .from("Products")
-        .upload(path, file, { contentType: file.type, upsert: false });
+if (editingProductId && !file) {
+  const { data: oldProduct, error: oldError } = await client
+    .from("products")
+    .select("image_url")
+    .eq("id", editingProductId)
+    .single();
 
-      if (uploadError) throw uploadError;
-      uploadedPath = path;
+  if (oldError) throw oldError;
+  imageUrl = oldProduct.image_url;
+}
 
-      const { data: publicData } = client.storage
-        .from("Products")
-        .getPublicUrl(path);
+if (file) {
+  const extension = file.type === "image/png" ? "png" :
+                    file.type === "image/webp" ? "webp" : "jpg";
 
-      const product = {
-        name,
-        description: $("description").value.trim(),
-        category: $("category").value,
-        price,
-        image_url: publicData.publicUrl,
-        colors: splitValues($("colors").value),
-        sizes: splitValues($("sizes").value),
-        stock,
-        active: true
-      };
+  const path = currentUser.id + "/" + crypto.randomUUID() + "." + extension;
 
-      const { error: insertError } = await client
-        .from("products")
-        .insert(product);
+  const { error: uploadError } = await client.storage
+    .from("Products")
+    .upload(path, file, { contentType: file.type, upsert: false });
 
-      if (insertError) throw insertError;
+  if (uploadError) throw uploadError;
 
-      status("تمت إضافة المنتج بنجاح ❤️");
-      $("productForm").reset();
-      $("stock").value = "1";
-      await loadProducts();
+  uploadedPath = path;
+
+  const { data: publicData } = client.storage
+    .from("Products")
+    .getPublicUrl(path);
+
+  imageUrl = publicData.publicUrl;
+}
+
+const product = {
+  name,
+  description: $("description").value.trim(),
+  category: $("category").value,
+  price,
+  image_url: imageUrl,
+  colors: splitValues($("colors").value),
+  sizes: splitValues($("sizes").value),
+  stock,
+  active: true
+};
+
+if (editingProductId) {
+  const { error: updateError } = await client
+    .from("products")
+    .update(product)
+    .eq("id", editingProductId);
+
+  if (updateError) throw updateError;
+
+  status("تم تعديل المنتج بنجاح ❤️");
+  editingProductId = null;
+  $("photo").required = true;
+} else {
+  const { error: insertError } = await client
+    .from("products")
+    .insert(product);
+
+  if (insertError) throw insertError;
+
+  status("تمت إضافة المنتج بنجاح ❤️");
+}
+
+$("productForm").reset();
+$("stock").value = "1";
+await loadProducts();
     } catch (error) {
       if (uploadedPath) {
         await client.storage.from("Products").remove([uploadedPath]);
