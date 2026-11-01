@@ -492,7 +492,34 @@ function addItem(product) {
     notice.style.display = "none";
   }, 2200);
 }
+function renderBag() {
+  const bagContents = document.getElementById("bagContents");
+  const bagTotal = document.getElementById("bagTotal");
 
+  bagContents.innerHTML = "";
+  let total = 0;
+
+  if (bagItems.size === 0) {
+    bagContents.innerHTML = "<p>Your bag is empty.</p>";
+  }
+
+  bagItems.forEach((item, id) => {
+    const subtotal = item.price * item.quantity;
+    total += subtotal;
+
+    bagContents.innerHTML += `
+      <div class="bag-item">
+        <div>
+          <strong>${item.name}</strong>
+          <p>${item.price.toFixed(2)} × ${item.quantity}</p>
+        </div>
+        <strong>${subtotal.toFixed(2)}</strong>
+      </div>
+    `;
+  });
+
+  bagTotal.textContent = total.toFixed(2);
+}
 async function loadProducts() {
   productsContainer.innerHTML =
     '<p class="muted">Loading collection...</p>';
