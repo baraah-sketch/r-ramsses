@@ -281,7 +281,7 @@ let editingProductId = null;
 
     const { data, error } = await client
       .from("products")
-      .select("id,name,price,image_url,active")
+      .select("id,name,price,image_url,active,category,description,colors,sizes,stock")
       .order("created_at", { ascending: false });
 
     if (error) {
