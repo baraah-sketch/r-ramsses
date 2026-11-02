@@ -6,106 +6,685 @@
 <meta name="theme-color" content="#111111">
 <title>Z-RAM | Luxury Menswear</title>
 <style>
-:root{--black:#111;--white:#f8f8f6;--gray:#777;--line:#dedbd5}
+:root{
+  --black:#111;
+  --white:#f8f8f6;
+  --gray:#777;
+  --line:#dedbd5;
+}
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--white);color:var(--black);font-family:"Helvetica Neue",Arial,sans-serif}
+body{
+  margin:0;
+  background:var(--white);
+  color:var(--black);
+  font-family:"Helvetica Neue",Arial,sans-serif;
+}
 body.modal-open{overflow:hidden}
 a{color:inherit;text-decoration:none}
 button,input,textarea,select{font:inherit}
-.topbar{text-align:center;background:#111;color:#fff;padding:11px 10px;font-size:9px;letter-spacing:2.3px}
-header{padding:22px 6%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);gap:18px}
-.logo{
-  font-family: "Bodoni 72", "Didot", "Bodoni MT", Georgia, serif;
-  font-size: 42px;
-  font-weight: 700;
-  letter-spacing: 5px;
-  line-height: 1.2;
+
+/* TOP BAR */
+.topbar{
+  text-align:center;
+  background:#111;
+  color:#fff;
+  padding:10px;
+  font-size:9px;
+  letter-spacing:2.3px;
 }
-nav{display:flex;gap:22px;font-size:10px;font-weight:700;letter-spacing:1.4px}
-.bag{background:none;border:0;color:#111;font-size:12px;cursor:pointer;padding:8px;letter-spacing:1px}
-.hero{min-height:580px;background:#171717;color:#fff;display:flex;align-items:center;padding:8%;position:relative;overflow:hidden}
-.hero:after{content:"";position:absolute;inset:0 0 0 38%;background:linear-gradient(90deg,rgba(17,17,17,.5),rgba(17,17,17,.04)),url("https://baraah-sketch.github.io/r-ramsses/central-cee-1.jpg.JPG") center/cover no-repeat}
-.hero-content{position:relative;z-index:2;max-width:460px;color:#fff}
-.eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:inherit}
-h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(38px,6vw,68px);line-height:1.02;letter-spacing:-1px;margin:22px 0;text-transform:uppercase}
-.hero p{color:#dedede;font-size:14px;line-height:1.8;max-width:320px}
-.button{display:inline-block;background:#fff;color:#111;padding:16px 26px;font-size:10px;font-weight:800;letter-spacing:1.8px;margin-top:15px;border:1px solid #fff;cursor:pointer}
-.section{padding:65px 6%}
-.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:28px}
-h2{font-family:Georgia,serif;font-size:34px;font-weight:400;margin:0 0 8px}
-.muted{color:var(--gray);font-size:12px;line-height:1.7}
-.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 22px}
-.product-art{height:360px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:#eeece7}
-.product-image{width:100%;height:100%;object-fit:cover;object-position:center;cursor:zoom-in}
-.product-info{padding:17px 0}
-.product-info h3{font-size:14px;font-weight:700;line-height:1.5;margin:0 0 9px}
-.price{font-size:12px;color:#555;margin-top:4px}
-.tag{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#888;margin-bottom:10px}
-.add{margin-top:14px;width:100%;background:#111;color:#fff;border:1px solid #111;padding:13px 16px;font-size:10px;font-weight:700;letter-spacing:1.5px;cursor:pointer}
-.add:hover{background:#fff;color:#111}
-.add:disabled{opacity:.45;cursor:not-allowed}
-.collections{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.collection{min-height:230px;padding:34px;display:flex;flex-direction:column;justify-content:end;background:#252525;color:#fff}
-.collection:nth-child(2){background:#d8d3ca;color:#111}
-.collection span{font-size:10px;letter-spacing:2px}
-.collection h3{font:32px Georgia,serif;margin:10px 0}
-.about{background:#eeece7;text-align:center;padding:65px 12%}
-.about p{max-width:580px;margin:18px auto;color:#555;font-size:13px;line-height:1.9}
-footer{background:#111;color:#eee;padding:35px 6%;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:11px;letter-spacing:1px}
-#notice{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:white;padding:14px 20px;font-size:12px;display:none;z-index:10010;max-width:90%;text-align:center}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:10000;display:flex;justify-content:flex-end}
-.overlay[hidden]{display:none}
-.drawer{width:min(480px,100%);height:100%;overflow-y:auto;background:#fff;color:#111;padding:30px 24px;position:relative}
-.drawer-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ddd;padding-bottom:18px}
-.drawer-head h2{font:22px Georgia,serif;letter-spacing:2px;margin:0}
-.close{border:0;background:none;font-size:30px;cursor:pointer;line-height:1}
-.bag-row{display:grid;grid-template-columns:90px 1fr;gap:15px;padding:20px 0;border-bottom:1px solid #e5e5e5}
-.bag-row img{width:90px;height:115px;object-fit:cover;background:#eee}
-.bag-row h3{font-size:13px;margin:0 0 7px}
-.bag-row p{font-size:11px;color:#666;margin:5px 0}
-.bag-row-actions{display:flex;align-items:center;gap:9px;margin-top:10px}
-.qty-btn,.remove-btn{border:1px solid #ccc;background:#fff;padding:5px 9px;cursor:pointer;font-size:12px}
-.remove-btn{margin-left:auto;border:0;text-decoration:underline}
-.bag-summary{border-top:1px solid #ddd;margin-top:22px;padding-top:18px}
-.total-line{display:flex;justify-content:space-between;font-size:13px;letter-spacing:1px;margin-bottom:18px}
-.primary-btn{width:100%;padding:16px;background:#111;color:#fff;border:1px solid #111;font-size:11px;font-weight:700;letter-spacing:1.7px;cursor:pointer}
-.primary-btn:disabled{opacity:.5;cursor:not-allowed}
-.empty-bag{text-align:center;color:#777;padding:45px 10px;font-size:13px}
-.form-field{display:block;margin:14px 0}
-.form-field span{display:block;font-size:10px;letter-spacing:1px;margin-bottom:7px;text-transform:uppercase}
-.form-field input,.form-field textarea{width:100%;padding:13px;border:1px solid #ccc;background:#fff;border-radius:0;font-size:13px}
-.form-field textarea{min-height:75px;resize:vertical}
-.modal-card{width:min(440px,100%);max-height:100%;overflow:auto;background:#fff;padding:28px 24px;margin:auto}
-.modal-card h2{font-size:25px;margin:10px 0 20px}
-.option-label{display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase;margin:18px 0 8px}
-.option-select{width:100%;padding:13px;border:1px solid #ccc;background:#fff;border-radius:0}
-.modal-actions{display:flex;gap:10px;margin-top:22px}
-.secondary-btn{flex:1;padding:15px;background:#fff;border:1px solid #111;cursor:pointer;font-size:10px;letter-spacing:1px}
-.modal-actions .primary-btn{flex:1}
-@media(max-width:650px){
- header{padding:18px 5%;flex-wrap:wrap;gap:14px}
- nav{order:3;width:100%;justify-content:space-between;gap:8px;font-size:9px}
+
+/* HEADER */
+header{
+  padding:22px 6%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--line);
+  gap:18px;
+}
+
 .logo{
+  font-family:"Bodoni 72","Didot","Bodoni MT",Georgia,serif;
   font-size:42px;
+  font-weight:700;
   letter-spacing:5px;
   line-height:1.2;
 }
- .hero{min-height:540px;padding:9% 6%;align-items:flex-start}
- .hero:after{inset:0;background:linear-gradient(90deg,rgba(17,17,17,.62),rgba(17,17,17,.15)),url("https://baraah-sketch.github.io/r-ramsses/central-cee-1.jpg.JPG") center/cover no-repeat}
- .hero-content{max-width:100%;padding-top:10px}
- .section{padding:45px 5%}
- .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 11px}
- .product-art{height:240px}
- .product-info{padding:12px 0}
- .product-info h3{font-size:12px}
- .add{padding:12px 5px;font-size:9px;letter-spacing:1px}
- .section-head{align-items:flex-start;flex-direction:column}
- h2{font-size:29px}
- .collections{grid-template-columns:1fr}
- .collection{min-height:190px}
- .about{padding:48px 7%}
- .drawer{padding:24px 18px}
+
+nav{
+  display:flex;
+  gap:24px;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:1.4px;
+}
+
+nav a{
+  transition:opacity .2s ease;
+}
+nav a:hover{opacity:.55}
+
+.bag{
+  background:none;
+  border:0;
+  color:#111;
+  font-size:12px;
+  cursor:pointer;
+  padding:8px;
+  letter-spacing:1px;
+}
+
+/* HERO */
+.hero{
+  min-height:580px;
+  background:#171717;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  padding:8%;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero:after{
+  content:"";
+  position:absolute;
+  inset:0 0 0 38%;
+  background:
+    linear-gradient(90deg,rgba(17,17,17,.55),rgba(17,17,17,.08)),
+    url("https://baraah-sketch.github.io/r-ramsses/central-cee-1.jpg.JPG")
+    center 35%/cover no-repeat;
+}
+
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:460px;
+  color:#fff;
+}
+
+.eyebrow{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:inherit;
+}
+
+h1{
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:400;
+  font-size:clamp(38px,6vw,68px);
+  line-height:1.02;
+  letter-spacing:-1px;
+  margin:22px 0;
+  text-transform:uppercase;
+}
+
+.hero p{
+  color:#dedede;
+  font-size:14px;
+  line-height:1.8;
+  max-width:320px;
+}
+
+.button{
+  display:inline-block;
+  background:#fff;
+  color:#111;
+  padding:16px 26px;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.8px;
+  margin-top:15px;
+  border:1px solid #fff;
+  cursor:pointer;
+  transition:background .25s,color .25s;
+}
+
+.button:hover{
+  background:transparent;
+  color:#fff;
+}
+
+/* SECTIONS */
+.section{
+  padding:75px 6%;
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:15px;
+  margin-bottom:34px;
+}
+
+h2{
+  font-family:Georgia,serif;
+  font-size:36px;
+  font-weight:400;
+  margin:0 0 8px;
+  line-height:1.15;
+}
+
+.muted{
+  color:var(--gray);
+  font-size:13px;
+  line-height:1.7;
+}
+
+/* PRODUCTS */
+.products{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:34px 22px;
+}
+
+.product-art{
+  height:360px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+  background:#eeece7;
+}
+
+.product-image{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  cursor:zoom-in;
+  transition:transform .5s ease;
+}
+
+.product-art:hover .product-image{
+  transform:scale(1.035);
+}
+
+.product-info{padding:17px 0}
+
+.product-info h3{
+  font-size:14px;
+  font-weight:700;
+  line-height:1.5;
+  margin:0 0 9px;
+}
+
+.price{
+  font-size:13px;
+  color:#555;
+  margin-top:4px;
+}
+
+.tag{
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  color:#888;
+  margin-bottom:10px;
+}
+
+.add{
+  margin-top:14px;
+  width:100%;
+  background:#111;
+  color:#fff;
+  border:1px solid #111;
+  padding:15px 16px;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:1.5px;
+  cursor:pointer;
+  transition:background .2s,color .2s;
+}
+
+.add:hover{
+  background:#fff;
+  color:#111;
+}
+
+.add:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+/* COLLECTIONS */
+.collections{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.collection{
+  min-height:250px;
+  padding:34px;
+  display:flex;
+  flex-direction:column;
+  justify-content:end;
+  background:#252525;
+  color:#fff;
+}
+
+.collection:nth-child(2){
+  background:#d8d3ca;
+  color:#111;
+}
+
+.collection span{
+  font-size:10px;
+  letter-spacing:2px;
+}
+
+.collection h3{
+  font:32px Georgia,serif;
+  margin:10px 0;
+}
+
+/* ABOUT */
+.about{
+  background:#eeece7;
+  text-align:center;
+  padding:75px 12%;
+}
+
+.about p{
+  max-width:580px;
+  margin:18px auto;
+  color:#555;
+  font-size:13px;
+  line-height:1.9;
+}
+
+/* FOOTER */
+footer{
+  background:#111;
+  color:#eee;
+  padding:35px 6%;
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+  font-size:11px;
+  letter-spacing:1px;
+}
+
+/* NOTICE */
+#notice{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#111;
+  color:white;
+  padding:14px 20px;
+  font-size:12px;
+  display:none;
+  z-index:10010;
+  max-width:90%;
+  text-align:center;
+}
+
+/* DRAWER */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.62);
+  z-index:10000;
+  display:flex;
+  justify-content:flex-end;
+}
+
+.overlay[hidden]{display:none}
+
+.drawer{
+  width:min(480px,100%);
+  height:100%;
+  overflow-y:auto;
+  background:#fff;
+  color:#111;
+  padding:30px 24px;
+  position:relative;
+}
+
+.drawer-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #ddd;
+  padding-bottom:18px;
+}
+
+.drawer-head h2{
+  font:22px Georgia,serif;
+  letter-spacing:2px;
+  margin:0;
+}
+
+.close{
+  border:0;
+  background:none;
+  font-size:30px;
+  cursor:pointer;
+  line-height:1;
+}
+
+.bag-row{
+  display:grid;
+  grid-template-columns:90px 1fr;
+  gap:15px;
+  padding:20px 0;
+  border-bottom:1px solid #e5e5e5;
+}
+
+.bag-row img{
+  width:90px;
+  height:115px;
+  object-fit:cover;
+  background:#eee;
+}
+
+.bag-row h3{
+  font-size:13px;
+  margin:0 0 7px;
+}
+
+.bag-row p{
+  font-size:11px;
+  color:#666;
+  margin:5px 0;
+}
+
+.bag-row-actions{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin-top:10px;
+}
+
+.qty-btn,.remove-btn{
+  border:1px solid #ccc;
+  background:#fff;
+  padding:5px 9px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.remove-btn{
+  margin-left:auto;
+  border:0;
+  text-decoration:underline;
+}
+
+.bag-summary{
+  border-top:1px solid #ddd;
+  margin-top:22px;
+  padding-top:18px;
+}
+
+.total-line{
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  letter-spacing:1px;
+  margin-bottom:18px;
+}
+
+.primary-btn{
+  width:100%;
+  padding:16px;
+  background:#111;
+  color:#fff;
+  border:1px solid #111;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.7px;
+  cursor:pointer;
+}
+
+.primary-btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+.empty-bag{
+  text-align:center;
+  color:#777;
+  padding:45px 10px;
+  font-size:13px;
+}
+
+/* FORMS */
+.form-field{
+  display:block;
+  margin:14px 0;
+}
+
+.form-field span{
+  display:block;
+  font-size:10px;
+  letter-spacing:1px;
+  margin-bottom:7px;
+  text-transform:uppercase;
+}
+
+.form-field input,.form-field textarea{
+  width:100%;
+  padding:13px;
+  border:1px solid #ccc;
+  background:#fff;
+  border-radius:0;
+  font-size:13px;
+}
+
+.form-field textarea{
+  min-height:75px;
+  resize:vertical;
+}
+
+/* PRODUCT OPTIONS */
+.modal-card{
+  width:min(440px,100%);
+  max-height:100%;
+  overflow:auto;
+  background:#fff;
+  padding:28px 24px;
+  margin:auto;
+}
+
+.modal-card h2{
+  font-size:25px;
+  margin:10px 0 20px;
+}
+
+.option-label{
+  display:block;
+  font-size:10px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin:18px 0 8px;
+}
+
+.option-select{
+  width:100%;
+  padding:13px;
+  border:1px solid #ccc;
+  background:#fff;
+  border-radius:0;
+}
+
+.modal-actions{
+  display:flex;
+  gap:10px;
+  margin-top:22px;
+}
+
+.secondary-btn{
+  flex:1;
+  padding:15px;
+  background:#fff;
+  border:1px solid #111;
+  cursor:pointer;
+  font-size:10px;
+  letter-spacing:1px;
+}
+
+.modal-actions .primary-btn{flex:1}
+
+/* MOBILE */
+@media(max-width:650px){
+
+  header{
+    padding:17px 5%;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+
+  .logo{
+    font-size:38px;
+    letter-spacing:4px;
+  }
+
+  nav{
+    order:3;
+    width:100%;
+    justify-content:space-between;
+    gap:5px;
+    font-size:8px;
+    letter-spacing:1px;
+    padding-top:12px;
+    border-top:1px solid var(--line);
+  }
+
+  .bag{
+    font-size:11px;
+  }
+
+  .hero{
+    min-height:560px;
+    padding:9% 6%;
+    align-items:flex-start;
+  }
+
+  .hero:after{
+    inset:0;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(17,17,17,.78) 0%,
+        rgba(17,17,17,.48) 48%,
+        rgba(17,17,17,.16) 100%
+      ),
+      url("https://baraah-sketch.github.io/r-ramsses/central-cee-1.jpg.JPG")
+      center 30%/cover no-repeat;
+  }
+
+  .hero-content{
+    max-width:90%;
+    padding-top:22px;
+  }
+
+  h1{
+    font-size:clamp(38px,10vw,54px);
+    line-height:1.04;
+    margin:19px 0;
+  }
+
+  .hero p{
+    font-size:13px;
+    max-width:270px;
+  }
+
+  .button{
+    padding:15px 18px;
+    font-size:9px;
+    letter-spacing:1.4px;
+  }
+
+  .section{
+    padding:55px 5%;
+  }
+
+  .section-head{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:9px;
+    margin-bottom:25px;
+  }
+
+  h2{
+    font-size:31px;
+  }
+
+  .muted{
+    font-size:12px;
+  }
+
+  .products{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:25px 12px;
+  }
+
+  .product-art{
+    height:auto;
+    aspect-ratio: .82;
+  }
+
+  .product-info{
+    padding:12px 0;
+  }
+
+  .product-info h3{
+    font-size:12px;
+  }
+
+  .price{
+    font-size:12px;
+  }
+
+  .tag{
+    font-size:8px;
+    letter-spacing:2px;
+  }
+
+  .add{
+    padding:13px 4px;
+    font-size:8px;
+    letter-spacing:1px;
+  }
+
+  .collections{
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+
+  .collection{
+    min-height:200px;
+    padding:26px;
+  }
+
+  .collection h3{
+    font-size:29px;
+  }
+
+  .about{
+    padding:55px 7%;
+  }
+
+  footer{
+    padding:30px 5%;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .drawer{
+    padding:24px 18px;
+  }
 }
 </style>
 </head>
