@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#111111">
-<title>R. RAMSSES | Luxury Menswear</title>
+<title>Z-RAM | Luxury Menswear</title>
 <style>
 :root{--black:#111;--white:#f8f8f6;--gray:#777;--line:#dedbd5}
 *{box-sizing:border-box}
@@ -19,7 +19,7 @@ header{padding:22px 6%;display:flex;align-items:center;justify-content:space-bet
 nav{display:flex;gap:22px;font-size:10px;font-weight:700;letter-spacing:1.4px}
 .bag{background:none;border:0;color:#111;font-size:12px;cursor:pointer;padding:8px;letter-spacing:1px}
 .hero{min-height:580px;background:#171717;color:#fff;display:flex;align-items:center;padding:8%;position:relative;overflow:hidden}
-.hero:after{content:"";position:absolute;inset:0 0 0 38%;background:linear-gradient(90deg,rgba(17,17,17,.5),rgba(17,17,17,.04)),url("https://baraah-sketch.github.io/r-ramsses/central-cee-1.jpg.JPG") center/cover no-repeat}
+.hero:after{content:"";position:absolute;inset:0 0 0 38%;background:linear-gradient(90deg,rgba(17,17,17,.5),rgba(17,17,17,.04)),url("https://baraah-sketch.github.io/Z-RAM/central-cee-1.jpg.JPG") center/cover no-repeat}
 .hero-content{position:relative;z-index:2;max-width:460px;color:#fff}
 .eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:inherit}
 h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(38px,6vw,68px);line-height:1.02;letter-spacing:-1px;margin:22px 0;text-transform:uppercase}
@@ -82,7 +82,7 @@ footer{background:#111;color:#eee;padding:35px 6%;display:flex;justify-content:s
  nav{order:3;width:100%;justify-content:space-between;gap:8px;font-size:9px}
  .logo{font-size:18px}
  .hero{min-height:540px;padding:9% 6%;align-items:flex-start}
- .hero:after{inset:0;background:linear-gradient(90deg,rgba(17,17,17,.62),rgba(17,17,17,.15)),url("https://baraah-sketch.github.io/r-ramsses/central-cee-1.jpg.JPG") center/cover no-repeat}
+ .hero:after{inset:0;background:linear-gradient(90deg,rgba(17,17,17,.62),rgba(17,17,17,.15)),url("https://baraah-sketch.github.io/Z-RAM/central-cee-1.jpg.JPG") center/cover no-repeat}
  .hero-content{max-width:100%;padding-top:10px}
  .section{padding:45px 5%}
  .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 11px}
@@ -102,13 +102,13 @@ footer{background:#111;color:#eee;padding:35px 6%;display:flex;justify-content:s
 <body>
 <div class="topbar">TIMELESS STYLE · CONTEMPORARY MENSWEAR</div>
 <header>
-<a class="logo" href="#">R. RAMSSES</a>
+<a class="logo" href="#">Z-RAM</a>
 <nav><a href="#new">NEW ARRIVALS</a><a href="#collection">COLLECTIONS</a><a href="#about">OUR PHILOSOPHY</a></nav>
 <button class="bag" id="openBag" type="button">BAG (<span id="count">0</span>)</button>
 </header>
 <main>
 <section class="hero"><div class="hero-content">
-<div class="eyebrow">R. RAMSSES — SPORT LUXURY</div>
+<div class="eyebrow">Z-RAM — SPORT LUXURY</div>
 <h1>MOVE DIFFERENT.<br>STAND APART.</h1>
 <p>Bold essentials. No ordinary presence.</p>
 <a class="button" href="#new">DISCOVER THE COLLECTION ↗</a>
@@ -248,7 +248,7 @@ function renderProducts() {
      ${image ? `<img class="product-image" src="${escapeHTML(image)}" alt="${escapeHTML(product.name)}" data-zoom="${escapeHTML(image)}">` : ""}
     </div>
     <div class="product-info">
-     <div class="tag">${escapeHTML(product.category || "R. RAMSSES")}</div>
+     <div class="tag">${escapeHTML(product.category || "Z-RAM")}</div>
      <h3>${escapeHTML(product.name)}</h3>
      <div class="muted">${escapeHTML(product.description || "")}</div>
      <div class="price">${money(product.price)}</div>
