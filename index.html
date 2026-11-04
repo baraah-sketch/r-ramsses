@@ -741,7 +741,20 @@ footer{
    <label class="form-field"><span>Full name</span><input id="customerName" required autocomplete="name"></label>
    <label class="form-field"><span>Phone number</span><input id="customerPhone" required type="tel" autocomplete="tel"></label>
    <label class="form-field"><span>Delivery address</span><textarea id="customerAddress" required autocomplete="street-address"></textarea></label>
-   <button class="primary-btn" id="placeOrder" type="submit">PLACE ORDER</button>
+  <div class="form-field">
+  <span>Payment method</span>
+
+  <label style="display:flex;align-items:center;gap:9px;margin:12px 0;font-size:13px;">
+    <input type="radio" name="paymentMethod" value="cash_on_delivery" checked>
+    Cash on Delivery — Available
+  </label>
+
+  <label style="display:flex;align-items:center;gap:9px;margin:12px 0;font-size:13px;color:#999;">
+    <input type="radio" name="paymentMethod" value="card" disabled>
+    Card Payment — Coming Soon
+  </label>
+</div>
+    <button class="primary-btn" id="placeOrder" type="submit">PLACE ORDER</button>
   </form>
  </aside>
 </div>
