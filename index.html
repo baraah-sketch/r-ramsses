@@ -1026,7 +1026,8 @@ imageOverlay.addEventListener("click", event => {
   customer_name: document.getElementById("customerName").value.trim(),
   phone: document.getElementById("customerPhone").value.trim(),
   address: document.getElementById("customerAddress").value.trim(),
-  items: bagItems.map(item => ({
+   payment_method: document.querySelector('input[name="paymentMethod"]:checked').value,
+   items: bagItems.map(item => ({
    product_id: item.id,
    name: item.name,
    color: item.color,
