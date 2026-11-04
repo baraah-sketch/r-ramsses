@@ -694,6 +694,34 @@ footer{
     padding:24px 18px;
   }
 }
+  .payment-option {
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-start !important;
+  gap: 10px;
+  direction: ltr;
+  width: 100%;
+  margin: 12px 0;
+  font-size: 12px;
+  text-align: left;
+}
+
+.payment-option span {
+  display: inline !important;
+  width: auto;
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.payment-option input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin: 0;
+  flex: 0 0 16px;
+}
 </style>
 </head>
 <body>
@@ -750,16 +778,16 @@ footer{
    <label class="form-field"><span>Phone number</span><input id="customerPhone" required type="tel" autocomplete="tel"></label>
    <label class="form-field"><span>Delivery address</span><textarea id="customerAddress" required autocomplete="street-address"></textarea></label>
   <div class="form-field">
-  <span>Payment method</span>
+  <span>PAYMENT METHOD</span>
 
-  <label style="display:flex;align-items:center;gap:9px;margin:12px 0;font-size:13px;">
+  <label class="payment-option">
     <input type="radio" name="paymentMethod" value="cash_on_delivery" checked>
-    Cash on Delivery — Available
+    <span>Cash on Delivery — Available</span>
   </label>
 
-  <label style="display:flex;align-items:center;gap:9px;margin:12px 0;font-size:13px;color:#999;">
+  <label class="payment-option disabled-option">
     <input type="radio" name="paymentMethod" value="card" disabled>
-    Card Payment — Coming Soon
+    <span>Card Payment — Coming Soon</span>
   </label>
 </div>
     <button class="primary-btn" id="placeOrder" type="submit">PLACE ORDER</button>
